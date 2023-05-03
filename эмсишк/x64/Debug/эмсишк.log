@@ -1,5 +1,0 @@
-﻿  Source.c
-C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\by ann\эмсишк\Source.c(48,16): warning C4013: malloc: нет определения; предполагается "extern" с возвратом типа "int"
-C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\by ann\эмсишк\Source.c(48,39): warning C4047: =: "int *" отличается по уровням косвенного обращения от "int"
-C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\by ann\эмсишк\Source.c(55,5): warning C4013: free: нет определения; предполагается "extern" с возвратом типа "int"
-  эмсишк.vcxproj -> C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\by ann\эмсишк\x64\Debug\эмсишк.exe
