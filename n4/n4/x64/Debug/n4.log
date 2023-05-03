@@ -1,0 +1,8 @@
+﻿  Source.c
+C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\n4\n4\Source.c(36,21): warning C4244: функция: преобразование "double" в "float", возможна потеря данных
+C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\n4\n4\Source.c(36,35): warning C4244: функция: преобразование "double" в "float", возможна потеря данных
+C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\n4\n4\Source.c(37,19): warning C4244: функция: преобразование "double" в "float", возможна потеря данных
+C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\n4\n4\Source.c(37,31): warning C4244: функция: преобразование "double" в "float", возможна потеря данных
+C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\n4\n4\Source.c(39,17): warning C4244: функция: преобразование "double" в "float", возможна потеря данных
+C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\n4\n4\Source.c(39,29): warning C4244: функция: преобразование "double" в "float", возможна потеря данных
+  n4.vcxproj -> C:\Users\yusup\OneDrive\Рабочий стол\уёба\прога\n4\x64\Debug\n4.exe
