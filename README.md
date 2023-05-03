@@ -1,1 +1,1 @@
-# mati eto ploho
+# it-shka -- my god of programming
