@@ -40,7 +40,6 @@ matrixNxM Read(FILE* fp)
     fscanf_s(fp, "%d", &n);
     fscanf_s(fp, "%d", &m);
     matrix = initMatrix(n, m);
-    printf("\nmatrix from file:\n");
     for (int i = 0; i < matrix.n; i++) {
         for (int j = 0; j < matrix.m; j++)
         {
@@ -60,6 +59,7 @@ void print(matrixNxM matrix)
             printf("\t %.2f", *(matrix.data + i * matrix.n + j));
         printf("\n");
     }
+    printf("\n");
 }
 
 void PrintFile(matrixNxM matrix)
@@ -254,8 +254,10 @@ void main()
         return;
     }
 
+    printf("\nmatrix A from file:\n");
     print(a);
 
+    printf("\nmatrix B from file:\n");
     print(b);
 
     res = Sum(a, b);
