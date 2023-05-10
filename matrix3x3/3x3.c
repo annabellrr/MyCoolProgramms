@@ -3,7 +3,6 @@
 // структура матрица 
 typedef struct Matrix3x3 {
     double data[3][3];
-    double det;
 } Matrix3x3;
 
 // печать матрицы
@@ -25,7 +24,7 @@ double eval_det(Matrix3x3* matrix)
     double det = 0;
     for (int i = 0; i < 3; i++)
         det = det + (matrix->data[0][i] * (matrix->data[1][(i + 1) % 3] * matrix->data[2][(i + 2) % 3] - matrix->data[1][(i + 2) % 3] * matrix->data[2][(i + 1) % 3]));
-    matrix->det = det;
+
     return det;
 }
 
@@ -72,32 +71,65 @@ void readFromFile(char* filename, Matrix3x3* matrix)
     FILE* f = NULL;
     fopen_s(&f, filename, "r");
 
+
+
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             fscanf_s(f, "%lf", &matrix->data[i][j]);
         }
     }
+    //matrix.det = eval_det(matrix);
     return;
-
 }
+
+Matrix3x3 readFromConsole(Matrix3x3* matrix ) {
+    printf("Enter the elements:");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            scanf_s("%lf", &matrix->data[i][j]);
+        }
+    }
+    return *matrix;
+}
+
 
 
 int main()
 {
-    char filename[] = "matrix.txt";
+    Matrix3x3 mat; 
+    int N;
+    printf("select: 1 - read from file, 2 - from console\n");
+    scanf_s("%d", &N);
 
-    printf(filename);
+    if (N == 1)
+    {
+        char filename[20] = "matrix.txt";
 
-    Matrix3x3 mat;
-    readFromFile(filename, &mat);
+        printf(filename);
 
-    printf("Matrix from file :\n");
+        readFromFile(filename, &mat);
 
-    print_matrix(&mat);
+        printf("Matrix from file :\n");
+        print_matrix(&mat);
+    }
+
+    if (N == 2)
+    {
+        readFromConsole(&mat);
+        printf("Matrix from console :\n");
+        print_matrix(&mat);
+    }
+ 
 
     printf("\n");
 
     printf("det of matrix is: %lf\n\n", eval_det(&mat));
+
+    if ((eval_det(&mat) - 0) < 1e-5)
+    {
+        printf("cringe bro\nthe matrix is degenerate\n");
+        return 0;
+    }
 
     Matrix3x3 invMatrix = inverseMatrix(&mat);
 

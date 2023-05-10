@@ -1,6 +1,6 @@
+#define CRT_SECURE_NO_WARNINGS
 #include "stdio.h"
 #include "malloc.h"
-#include "time.h"
 #include "stdlib.h"
 
 typedef struct matrixNxM
@@ -40,6 +40,7 @@ matrixNxM Read(FILE* fp)
     fscanf_s(fp, "%d", &n);
     fscanf_s(fp, "%d", &m);
     matrix = initMatrix(n, m);
+    printf("\nmatrix from file:\n");
     for (int i = 0; i < matrix.n; i++) {
         for (int j = 0; j < matrix.m; j++)
         {
@@ -53,11 +54,10 @@ matrixNxM Read(FILE* fp)
 void print(matrixNxM matrix)
 {
     int i, j;
-    printf("Matrix:\n");
     for (int i = 0; i < matrix.n; i++)
     {
         for (int j = 0; j < matrix.m; j++)
-            printf("\t %f", *(matrix.data + i * matrix.n + j));
+            printf("\t %.2f", *(matrix.data + i * matrix.n + j));
         printf("\n");
     }
 }
@@ -66,7 +66,7 @@ void PrintFile(matrixNxM matrix)
 {
     int i, j;
     FILE* fp;
-    fp = fopen_s("Result.txt", "w");
+    fp = fopen("Result.txt", "w");
 
     for (i = 0; i < matrix.n; ++i)
     {
@@ -95,7 +95,7 @@ matrixNxM Sum(matrixNxM a, matrixNxM b)
         for (int j = 0; j < a.m; j++)
             *(res.data + i * res.n + j) = *(a.data + i * a.n + j) + *(b.data + i * b.n + j);
     }
-    printf("Sum:\n");
+    printf("\nSum matrix:\n");
     return res;
 
 }
@@ -123,7 +123,7 @@ matrixNxM mult(matrixNxM a, matrixNxM b)
                 *(res.data + i * res.n + j) += *(a.data + i * a.n + k) * *(b.data + k * b.n + j);
         }
     }
-    printf("Multiplication:\n");
+    printf("\nMultiplication:\n");
     return res;
 }
 
@@ -204,7 +204,7 @@ matrixNxM inverse(matrixNxM matrix)
             else
                 *(res.data + i * res.n + j) = (-1) * Det(mr) / det;
         }
-        printf("Inverse:\n");
+        printf("\nInverse matrix:\n");
         return res;
     }
 }
@@ -222,8 +222,8 @@ void main()
     matrixNxM a, b, res;
     printf("where to get the matrix, 1=File, 2=Random\n");
     scanf_s("%d", &dir);
-    FILE* asrc = fopen_s("asrc.txt", "rt");
-    FILE* bsrc = fopen_s("bsrc.txt", "rt");
+    FILE* asrc = fopen("asrc.txt", "r");
+    FILE* bsrc = fopen("bsrc.txt", "r");
     Check(asrc);
     Check(bsrc);
 
@@ -265,7 +265,8 @@ void main()
     res = mult(a, b);
     print(res);
     free(res.data);
-    printf("Determinant a: %f\n", Det(a));
+    printf("\nDeterminant a: %f\n", Det(a));
+    printf("Determinant b: %f\n", Det(b));
     res = inverse(a);
     print(res);
     free(res.data);
