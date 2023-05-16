@@ -1,5 +1,5 @@
-#include "stdio.h"
-#include "malloc.h"
+#include <stdio.h>
+#include <malloc.h>
 
 typedef struct text_type
 {
@@ -223,7 +223,7 @@ FILE* streamInit()
 {
 	int stream_type;
 	FILE* stream = stdin;
-	char* fname[100];
+	char* fname[255];
 	char trash;
 	printf("Input stream type:\n");
 	printf("0 - stdin (default)\n");
@@ -288,5 +288,5 @@ void main()
 	textPrint(newtext.p, stream);
 	free(text.p);
 	free(newtext.p);
-
+	return 0;
 }
