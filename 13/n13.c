@@ -17,11 +17,11 @@ Contact* head = NULL; // Голова списка
 // Функция для добавления элемента в список
 void add_contact(char* firstname, char* lastname, char* phone, char* dob) {
     Contact* new_contact = (Contact*)malloc(sizeof(Contact)); // Выделение памяти для нового элемента
-    strcpy(new_contact->firstname, firstname); // Заполнение поля "имя"
-    strcpy(new_contact->lastname, lastname); // Заполнение поля "фамилия"
-    strcpy(new_contact->phone, phone); // Заполнение поля "телефон"
-    strcpy(new_contact->dob, dob); // Заполнение поля "дата рождения"
-    new_contact->next = head; // Указываем на текущую "голову" списка
+    strcpy(new_contact->firstname, firstname);
+    strcpy(new_contact->lastname, lastname);
+    strcpy(new_contact->phone, phone);
+    strcpy(new_contact->dob, dob);
+    new_contact->next = head;
     head = new_contact; // Новый элемент становится "головой" списка
 }
 
@@ -31,14 +31,13 @@ void remove_contact(char* firstname, char* lastname) {
     Contact* previous = NULL;
     while (current != NULL) {
         if (strcmp(current->firstname, firstname) == 0 && strcmp(current->lastname, lastname) == 0) {
-            // Если элемент соответствует переданным данным, то он должен быть удален
             if (previous == NULL) { // Если удаляем первый элемент списка
                 head = current->next;
             }
             else { // Если удаляем не первый элемент списка
                 previous->next = current->next;
             }
-            free(current); // Освобождение памяти
+            free(current);
             printf("Контакт %s %s успешно удален из записной книжки\n", firstname, lastname);
             return;
         }
@@ -266,7 +265,7 @@ void menu() {
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    menu(); // Запуск пользовательского меню
+    menu();
 
     return 0;
 }
