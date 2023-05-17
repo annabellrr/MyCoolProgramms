@@ -9,6 +9,8 @@ typedef struct text_type
 
 }text_type;
 
+
+//чтение из файла, выделение памяти
 text_type textReadStep(FILE* stream, text_type text, int buffer_s, char terminator)
 {
 	text_type newtext;
@@ -57,6 +59,8 @@ text_type textReadStep(FILE* stream, text_type text, int buffer_s, char terminat
 	return newtext;
 }
 
+
+//чтение текста
 text_type getText(FILE* stream, char terminator, int buffer_s)
 {
 	text_type text;
@@ -76,6 +80,8 @@ text_type getText(FILE* stream, char terminator, int buffer_s)
 
 }
 
+
+//изменение размера текста
 int correctSize(text_type text)
 {
 	int sizeDelta = 0, i0 = 0;
@@ -112,6 +118,7 @@ int correctSize(text_type text)
 	return sizeDelta;
 }
 
+//первая заглавная буква
 int symFirst(text_type text, text_type newtext)
 {
 	int i0 = 0;
@@ -129,6 +136,8 @@ int symFirst(text_type text, text_type newtext)
 	return i0;
 }
 
+
+//проверяет пробелы
 int symSpace(text_type text, text_type newtext, int i, int pos)
 {
 	if (*(text.p + i) == ' ')
@@ -147,6 +156,8 @@ int symSpace(text_type text, text_type newtext, int i, int pos)
 	return pos;
 }
 
+
+//проверка знаков препинания
 int symPunct(text_type text, text_type newtext, int i, int pos)
 {
 	if ((*(text.p + i) == ',') ||
@@ -170,6 +181,8 @@ int symPunct(text_type text, text_type newtext, int i, int pos)
 	return pos;
 }
 
+
+//регистр
 int symLetter(text_type text, text_type newtext, int i, int pos)
 {
 	if ((*(text.p + i) != '.') &&
@@ -196,6 +209,7 @@ int symLetter(text_type text, text_type newtext, int i, int pos)
 	return pos;
 }
 
+//возвращает коррект текст
 text_type textCorrect(text_type text)
 {
 	int i0, pos;
