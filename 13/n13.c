@@ -164,7 +164,7 @@ void print_contacts() {
 
 // ‘ункци€ дл€ сохранени€ списка в файл
 void save_contacts() {
-    FILE* f = fopen("contacts.txt", "w");
+    FILE* f = fopen("yourContacts.txt", "w");
     if (f == NULL) {
         printf("ќшибка при открытии файла\n");
         return;
@@ -217,7 +217,8 @@ void menu() {
             printf("good job, Mikhael Sergeevich ^_^\n");
             exit(0);
         case 1:
-            printf("¬ведите им€: ");
+            printf("\t\tP.S. ¬водите им€ и фамилию на английском €зыке\n");
+            printf("\n¬ведите им€: ");
             scanf("%s", firstname);
             printf("¬ведите фамилию: ");
             scanf("%s", lastname);
