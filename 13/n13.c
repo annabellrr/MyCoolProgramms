@@ -59,7 +59,7 @@ int compare_strings(char* str1, char* str2) {
     return strcmp(str1, str2); // Функция strcmp() используется для сравнения строк
 }
 
-// Функция для сортировки списка
+/// Функция для сортировки списка
 void sort_contacts(int field) {
     Contact* current = head;
     Contact* prev = NULL;
@@ -69,86 +69,44 @@ void sort_contacts(int field) {
         swapped = 0;
         current = head;
         while (current->next != NULL) {
-            // Сравнение элементов, сортировка происходит по выбранному полю
-            if (field == 1) {
-                if (compare_strings(current->firstname, current->next->firstname) > 0) {
-                    next = current->next;
-                    current->next = next->next;
-                    next->next = current;
-                    if (prev == NULL) { // Первый элемент списка
-                        head = next;
-                    }
-                    else {
-                        prev->next = next;
-                    }
-                    prev = next;
-                    swapped = 1;
-                }
-                else {
-                    prev = current;
-                    current = current->next;
-                }
+            int comparator;
+            switch (field)
+            {
+            case 1:
+                comparator = compare_strings(current->firstname, current->next->firstname);
+                break;
+            case 2:
+                comparator = compare_strings(current->lastname, current->next->lastname);
+                break;
+            case 3:
+                comparator = compare_strings(current->phone, current->next->phone);
+                break;
+            case 4:
+                comparator = compare_strings(current->dob, current->next->dob);
+                break;
             }
-            else if (field == 2) {
-                if (compare_strings(current->lastname, current->next->lastname) > 0) {
-                    next = current->next;
-                    current->next = next->next;
-                    next->next = current;
-                    if (prev == NULL) {
-                        head = next;
-                    }
-                    else {
-                        prev->next = next;
-                    }
-                    prev = next;
-                    swapped = 1;
+            if (comparator > 0)
+            {
+                next = current->next;
+                current->next = next->next;
+                next->next = current;
+                if (prev == NULL) { // Первый элемент списка
+                    head = next;
                 }
                 else {
-                    prev = current;
-                    current = current->next;
+                    prev->next = next;
                 }
+                prev = next;
+                swapped = 1;
             }
-            else if (field == 3) {
-                if (compare_strings(current->phone, current->next->phone) > 0) {
-                    next = current->next;
-                    current->next = next->next;
-                    next->next = current;
-                    if (prev == NULL) {
-                        head = next;
-                    }
-                    else {
-                        prev->next = next;
-                    }
-                    prev = next;
-                    swapped = 1;
-                }
-                else {
-                    prev = current;
-                    current = current->next;
-                }
-            }
-            else {
-                if (compare_strings(current->dob, current->next->dob) > 0) {
-                    next = current->next;
-                    current->next = next->next;
-                    next->next = current;
-                    if (prev == NULL) {
-                        head = next;
-                    }
-                    else {
-                        prev->next = next;
-                    }
-                    prev = next;
-                    swapped = 1;
-                }
-                else {
-                    prev = current;
-                    current = current->next;
-                }
+            else
+            {
+                prev = current;
+                current = current->next;
             }
         }
+        printf("Записная книжка успешно отсортирована\n");
     }
-    printf("Записная книжка успешно отсортирована\n");
 }
 
 // Функция для вывода списка на экран
@@ -265,8 +223,6 @@ void menu() {
 
 int main() {
     setlocale(LC_ALL, "Russian");
-
     menu();
-
     return 0;
 }
