@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <windows.h>
+
 
 // Односвязный список
 typedef struct contact {
@@ -233,7 +235,8 @@ void menu() {
 }
 
 int main() {
-    system("chcp 1251 > nul");
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
     menu();
     return 0;
