@@ -98,7 +98,7 @@ void sort_contacts(int field) {
                 comparator = compare_strings(current->dob, current->next->dob);
                 break;
             }
-            if (comparator > 0)
+            if (&comparator > 0)
             {
                 next = current->next;
                 current->next = next->next;
