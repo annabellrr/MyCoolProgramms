@@ -14,6 +14,16 @@ typedef struct contact {
 
 Contact* head = NULL; // Голова списка
 
+void free_list(Contact** head) {
+    Contact* temp;
+    while (*head != NULL) {
+        temp = *head;
+        *head = (*head)->next;
+        free(temp);
+    }
+    *head = NULL;
+}
+
 // Функция для добавления элемента в список
 void add_contact(char* firstname, char* lastname, char* phone, char* dob) {
     Contact* new_contact = (Contact*)malloc(sizeof(Contact)); // Выделение памяти для нового элемента
@@ -65,7 +75,8 @@ void sort_contacts(int field) {
     Contact* prev = NULL;
     Contact* next = current->next;
     int swapped = 1;
-    while (swapped) {
+    int iterations = 0;
+    while (swapped && iterations < 100) { //ограничение на максимальное кол-во итераций
         swapped = 0;
         current = head;
         while (current->next != NULL) {
@@ -111,13 +122,13 @@ void sort_contacts(int field) {
 
 // Функция для вывода списка на экран
 void print_contacts() {
-    printf("------------------------------\n");
-    printf("Имя\tФамилия\tТелефон\t\tДата рождения\n");
-    printf("------------------------------\n");
+    printf("---------------------------------------------------------------------------------\n");
+    printf("Имя\t\t|  Фамилия\t\t|  Телефон\t\t|  Дата рождения\n");
+    printf("---------------------------------------------------------------------------------\n");
     for (Contact* current = head; current != NULL; current = current->next) {
-        printf("%s\t%s\t%s\t%s\n", current->firstname, current->lastname, current->phone, current->dob);
+        printf("%s\t\t|  %s\t\t\t|  %s\t\t|  %s\n", current->firstname, current->lastname, current->phone, current->dob);
     }
-    printf("------------------------------\n");
+    printf("---------------------------------------------------------------------------------\n");
 }
 
 // Функция для сохранения списка в файл
