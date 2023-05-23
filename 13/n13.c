@@ -233,6 +233,7 @@ void menu() {
 }
 
 int main() {
+    system("chcp 1251 > nul");
     setlocale(LC_ALL, "Russian");
     menu();
     return 0;
