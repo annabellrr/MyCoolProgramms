@@ -29,12 +29,15 @@ void free_list(Contact** head) {
 // Функция для добавления элемента в список
 void add_contact(char* firstname, char* lastname, char* phone, char* dob) {
     Contact* new_contact = (Contact*)malloc(sizeof(Contact)); // Выделение памяти для нового элемента
-    strcpy(new_contact->firstname, firstname);
-    strcpy(new_contact->lastname, lastname);
-    strcpy(new_contact->phone, phone);
-    strcpy(new_contact->dob, dob);
-    new_contact->next = head;
-    head = new_contact; // Новый элемент становится "головой" списка
+    if (new_contact != 0)
+    {
+        strcpy(new_contact->firstname, firstname);
+        strcpy(new_contact->lastname, lastname);
+        strcpy(new_contact->phone, phone);
+        strcpy(new_contact->dob, dob);
+        new_contact->next = head;
+        head = new_contact; // Новый элемент становится "головой" списка
+    }
 }
 
 // Функция для удаления элемента из списка
@@ -60,33 +63,42 @@ void remove_contact(char* firstname, char* lastname) {
 }
 
 // Функция для сравнения строк
-int compare_strings(char* str1, char* str2) {
-    // Для удобства сравнения, переводим строки в верхний регистр
-    for (int i = 0; str1[i]; i++) {
-        str1[i] = toupper(str1[i]);
-    }
-    for (int i = 0; str2[i]; i++) {
-        str2[i] = toupper(str2[i]);
-    }
-    return strcmp(str1, str2); // Функция strcmp() используется для сравнения строк
+int compare_strings(const char* str1, const char* str2) {
+    return strcoll(str1, str2);
 }
 
-/// Функция для сортировки списка
-void sort_contacts(int field) {
-    Contact* current = head;
-    Contact* prev = NULL;
+void swap(Contact* prev, Contact* current) {
     Contact* next = current->next;
+    current->next = next->next;
+    next->next = current;
+    if (prev == NULL) { // Первый элемент списка
+        head = next;
+    }
+    else {
+        prev->next = next;
+    }
+}
+
+//Для имени
+int compare_contacts(const Contact* contact1, const Contact* contact2) {
+    return strcmp(contact1->firstname, contact2->firstname);
+}
+
+// Функция для сортировки списка
+void sort_contacts(int field) {
+    int comparator = -1;
     int swapped = 1;
     int iterations = 0;
+    Contact* prev = NULL;
+
     while (swapped && iterations < 100) { //ограничение на максимальное кол-во итераций
         swapped = 0;
-        current = head;
+        Contact* current = head;
         while (current->next != NULL) {
-            int comparator;
             switch (field)
             {
             case 1:
-                comparator = compare_strings(current->firstname, current->next->firstname);
+                comparator = compare_contacts(current->firstname, current->next->firstname);
                 break;
             case 2:
                 comparator = compare_strings(current->lastname, current->next->lastname);
@@ -98,19 +110,14 @@ void sort_contacts(int field) {
                 comparator = compare_strings(current->dob, current->next->dob);
                 break;
             }
-            if (&comparator > 0)
+            if (comparator > 0)
             {
-                next = current->next;
-                current->next = next->next;
-                next->next = current;
-                if (prev == NULL) { // Первый элемент списка
-                    head = next;
+                if (prev != 0)
+                {
+                    swap(prev, current);
+                    swapped = 1;
+                    current = prev->next;
                 }
-                else {
-                    prev->next = next;
-                }
-                prev = next;
-                swapped = 1;
             }
             else
             {
@@ -118,14 +125,16 @@ void sort_contacts(int field) {
                 current = current->next;
             }
         }
-        printf("Записная книжка успешно отсортирована\n");
+        iterations++;
     }
+    printf("Записная книжка успешно отсортирована\n");
 }
+
 
 // Функция для вывода списка на экран
 void print_contacts() {
     printf("---------------------------------------------------------------------------------\n");
-    printf("Имя\t\t|  Фамилия\t\t|  Телефон\t\t|  Дата рождения\n");
+    printf("Имя\t\t|  Фамилия\t\t\t|  Телефон\t\t|  Дата рождения\n");
     printf("---------------------------------------------------------------------------------\n");
     for (Contact* current = head; current != NULL; current = current->next) {
         printf("%s\t\t|  %s\t\t\t|  %s\t\t|  %s\n", current->firstname, current->lastname, current->phone, current->dob);
@@ -176,13 +185,13 @@ void menu() {
         printf("3. Сортировать по имени\n");
         printf("4. Сортировать по фамилии\n");
         printf("5. Сортировать по телефону\n");
-        printf("6. Сортировать по дате рождения\n");
+        printf("6. Сортировать по дню рождения\n");
         printf("7. Вывести список на экран\n");
         printf("8. Сохранить в файл\n");
         printf("9. Загрузить из файла\n");
         printf("0. Выход\n");
         scanf("%d", &choice);
-        char firstname[20], lastname[20], phone[15], dob[11];
+        char firstname[50], lastname[50], phone[15], dob[11];
         switch (choice) {
         case 0:
             printf("good job, Mikhael Sergeevich ^_^\n");
